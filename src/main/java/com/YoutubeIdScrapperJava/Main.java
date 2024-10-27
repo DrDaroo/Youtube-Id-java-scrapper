@@ -52,6 +52,7 @@ public class Main {
                     }
 
                     if (!s.isBlank()) {
+
                         if(y == 5 && d == 1){
                             hash.add(s);
                             d=0;
@@ -61,6 +62,7 @@ public class Main {
                             d=1;
                         }
                         y++;
+
                     }
                 }
             }
