@@ -37,6 +37,7 @@ public class Main {
         LinkedHashSet<String> hash = new LinkedHashSet<>();
 
         int y = 0, d = 0;
+
         for (Element row : document.select("Script")) {
             if (row.html() != null) {
                 array = row.html().split("[^\\w-]+");
