@@ -39,10 +39,18 @@ public class Main {
         int y = 0, d = 0;
 
         for (Element row : document.select("Script")) {
+            if (hash.size() == x){
+                break;
+            }
+
             if (row.html() != null) {
                 array = row.html().split("[^\\w-]+");
 
                 for (String s : array){
+                    if (hash.size() == x){
+                        break;
+                    }
+
                     if (!s.isBlank()) {
                         if(y == 5 && d == 1){
                             hash.add(s);
