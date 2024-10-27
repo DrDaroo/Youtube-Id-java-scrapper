@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
-
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -32,48 +31,44 @@ public class Main {
         String url = "https://www.youtube.com/results?search_query=" + searchQuery;
 
         final Document document = Jsoup.connect(url).get();
+
         String[] array;
-        ArrayList<String[]> list1= new ArrayList<>();
+        ArrayList<String> list= new ArrayList<>();
+        LinkedHashSet<String> hash = new LinkedHashSet<>();
+
+        int y = 0, d = 0;
 
         for (Element row : document.select("Script")) {
             if (row.html() != null) {
-                array = row.html().split("\\W");
-                list1.add(array);
-            }
-        }
+                array = row.html().split("[^\\w-]+");
 
-        ArrayList<String> list2 = new ArrayList<>();
-
-        for (String[] a : list1) {
-            {
-                for (String s : a){
+                for (String s : array){
                     if (!s.isBlank()) {
-                        list2.add(s);
+                        if(y == 5 && d == 1){
+                            hash.add(s);
+                            d=0;
+                        }
+                        if(s.equals("WEB_PAGE_TYPE_WATCH")){
+                            y=0;
+                            d=1;
+                        }
+                        y++;
                     }
                 }
             }
         }
 
-        LinkedHashSet<String> hash = new LinkedHashSet<>();
-
-        for (int i = 0; i < list2.size(); i++) {
-            if (list2.get(i).equals("videoId")) {
-                hash.add(list2.get(i + 1));
-            }
-        }
-
         String[] string = new String[hash.size()];
         string = hash.toArray(string);
-        list2 = new ArrayList<>();
 
         if(x > string.length){
             System.out.println("Displaying only: " + string.length + " Titles!");
         }
         for (int i = 0; i < x && i < string.length; i++) {
-            list2.add("https://www.youtube.com/watch?v=" + string[i]);
+            list.add("https://www.youtube.com/watch?v=" + string[i]);
         }
 
-        return list2;
+        return list;
     }
 }
 
